@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="vi"V
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's 
+       
+    </title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #ffe6f2, #ffccd9, #ffb3c6, #ff99b9);
+            flex-direction: column;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.5s ease-in-out;
+        }
+
+        .heart-btn {
+            font-size: 60px;
+            color: #ff3366;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            animation: heartbeat 1.5s infinite alternate;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .heart-btn:hover {
+            transform: translate(-50%, -50%) scale(1.3);
+            text-shadow: 0 0 20px rgba(255, 51, 102, 1);
+        }
+
+        @keyframes heartbeat {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        .heart,
+        .letter,
+        .rose,
+        .star {
+            position: absolute;
+            top: -50px;
+            color: #ff3366;
+            font-size: 30px;
+            text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+            animation: fall linear infinite, glow 1.5s infinite alternate;
+            cursor: pointer;
+            z-index: 11;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+            }
+
+            to {
+                text-shadow: 0 0 20px rgba(255, 51, 102, 1);
+            }
+        }
+
+        .hidden-message,
+        .hidden-promise {
+            display: none;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: #ff3366;
+            font-size: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(255, 51, 102, 0.5);
+            animation: fadeIn 0.3s ease-in-out, pulse 2s infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: #ff3366;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+            animation: sparkle 1s infinite ease-in-out;
+            z-index: 12;
+        }
+
+        @keyframes sparkle {
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <audio id="valentineMusic" loop>
+        <source src="valentine_song.mp3" type="audio/mpeg">
+    </audio>
+    <div class="heart-btn" onclick="startHeartRain()">❤️</div>
+    <div class="hidden-message" id="valentineMessage">
+        <button class="close-btn" onclick="hideValentineMessage()">✖</button>
+        <p>💘 Chúc Linh một ngày Valentine thật ngọt ngào và tràn đầy yêu thương!  ❤️</p>
+    </div>
+    <div class="hidden-promise" id="valentinePromise">
+        <button class="close-btn" onclick="hideValentinePromise()">✖</button>
+        <p>💌  "Anh nguyện sẽ luôn ở bên cạnh, yêu thương và trân trọng Linh suốt đời. Dù có bất kỳ khó khăn hay thử thách nào, anh cũng sẽ không bao giờ buông tay, mà sẽ luôn nắm chặt tay em và cùng nhau vượt qua tất cả. Linh là điều quý giá nhất đối với anh, và anh hứa sẽ làm mọi điều có thể để mang lại hạnh phúc cho em."💖</p>
+    </div>
+    <audio id="clickSound">
+        <source src="click_sound.mp3" type="audio/mpeg">
+    </audio>
+    <script>
+        function startHeartRain() {
+            document.querySelector(".heart-btn").style.display = "none";
+            let audio = document.getElementById("valentineMusic");
+            audio.volume = 0;
+            audio.play();
+            let fadeIn = setInterval(() => {
+                if (audio.volume < 1) {
+                    audio.volume += 0.1;
+                } else {
+                    clearInterval(fadeIn);
+                }
+            }, 200);
+
+            document.body.style.background = "linear-gradient(135deg, #ff99b9, #ffb3c6, #ffccd9, #ffe6f2)";
+
+            
+            setInterval(() => {
+                createFallingElement("❤️", "heart");
+                createFallingElement("💌", "letter");
+                createFallingElement("🌹", "rose");
+                createFallingElement("⭐", "star");
+                createSparkle();
+            }, 2000);
+        }
+
+        function createFallingElement(symbol, className) {
+            let element = document.createElement("div");
+            element.className = className;
+            element.innerHTML = symbol;
+            element.style.left = Math.random() * 100 + "vw";
+            element.style.fontSize = Math.random() * 20 + 20 + "px";
+            
+            element.style.animationDuration = Math.random() * 3 + 5 + "s";
+            document.body.appendChild(element);
+
+            element.addEventListener("click", () => {
+                document.getElementById("clickSound").play();
+                if (symbol === "❤️") showValentineMessage();
+                if (symbol === "💌") showValentinePromise();
+            });
+
+            setTimeout(() => element.remove(), 9000);
+        }
+
+        function showValentineMessage() {
+            document.getElementById("valentineMessage").style.display = "block";
+        }
+
+        function hideValentineMessage() {
+            document.getElementById("valentineMessage").style.display = "none";
+        }
+
+        function showValentinePromise() {
+            document.getElementById("valentinePromise").style.display = "block";
+        }
+
+        function hideValentinePromise() {
+            document.getElementById("valentinePromise").style.display = "none";
+        }
+
+        function createSparkle() {
+            let sparkle = document.createElement("div");
+            sparkle.className = "sparkle";
+            sparkle.style.left = Math.random() * 100 + "vw";
+            sparkle.style.top = Math.random() * 100 + "vh";
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        }
+    </script>
+</body>
+
+</html>
